@@ -8,6 +8,7 @@ const CampgroundSchema = new Schema({
   price: Number,
   description: String,
   location: String,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }], // to store and ref each review(based on object id) in an array (one to many)
 });
 

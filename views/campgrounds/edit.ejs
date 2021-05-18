@@ -78,8 +78,10 @@
         <div id="formFile"></div>
       </div>
       <div class="mb-3">
+        <label class="form-label delete-image" for="delete-image"
+          >Select Images To Delete</label
+        >
         <% campground.images.map((img, i) => { %>
-        <img src="<%= img.thumbnail%>" class="img-thumbnail" alt="" />
         <div class="form-check-inline">
           <input
             type="checkbox"
@@ -88,7 +90,8 @@
             value="<%=img.filename%>"
           />
         </div>
-        <label for="image-<%=i%>">Delete?</label>
+        <img src="<%= img.thumbnail%>" class="img-thumbnail" alt="" />
+        <!-- <label for="image-<%=i%>">Delete?</label> -->
         <% }) %>
       </div>
       <div class="mb-3">

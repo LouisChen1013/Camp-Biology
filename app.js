@@ -21,7 +21,12 @@ const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 
-mongoose.connect("mongodb://localhost:27017/camp-biology", {
+// https://github.com/jdesboeufs/connect-mongo use mongodb to store our session instead using default memory store(small, difficult to scale)
+const MongoStore = require("connect-mongo");
+
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/camp-biology";
+
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -50,9 +55,24 @@ app.use(
   })
 ); //https://www.npmjs.com/package/express-mongo-sanitize
 
+const secret = process.env.SECRET || "notasecret";
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60, // update only one time in a period of 24 hours, does not matter how many request's are made
+  crypto: {
+    secret: secret,
+  },
+});
+
+store.on("error", function (e) {
+  console.log("session store error", e);
+});
+
 const sessionConfig = {
+  store,
   name: "session", // chagne our session name
-  secret: "notasecret",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {

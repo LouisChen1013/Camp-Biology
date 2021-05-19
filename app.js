@@ -20,6 +20,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
+const favicon = require("serve-favicon");
 
 // https://github.com/jdesboeufs/connect-mongo use mongodb to store our session instead using default memory store(small, difficult to scale)
 const MongoStore = require("connect-mongo");
@@ -54,6 +55,7 @@ app.use(
     replaceWith: "_",
   })
 ); //https://www.npmjs.com/package/express-mongo-sanitize
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 const secret = process.env.SECRET || "notasecret";
 

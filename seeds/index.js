@@ -5,7 +5,9 @@ const Campground = require("../models/camground");
 const Review = require("../models/review");
 const { places, descriptors } = require("./seedHelpers");
 
-mongoose.connect("mongodb://localhost:27017/camp-biology", {
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/camp-biology";
+
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -22,7 +24,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
   await Review.deleteMany({});
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 5; i++) {
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 20) + 10;
     const camp = new Campground({
@@ -42,13 +44,11 @@ const seedDB = async () => {
       },
       images: [
         {
-          url:
-            "https://res.cloudinary.com/dvp8efdz6/image/upload/v1620873928/Camp-Biology/gtgy1ytksb9bjrt8qqq7.jpg",
+          url: "https://res.cloudinary.com/dvp8efdz6/image/upload/v1620873928/Camp-Biology/gtgy1ytksb9bjrt8qqq7.jpg",
           filename: "Camp-Biology/gtgy1ytksb9bjrt8qqq7",
         },
         {
-          url:
-            "https://res.cloudinary.com/dvp8efdz6/image/upload/v1620873929/Camp-Biology/pxoz0xwu9c2gw6fmkgtp.jpg",
+          url: "https://res.cloudinary.com/dvp8efdz6/image/upload/v1620873929/Camp-Biology/pxoz0xwu9c2gw6fmkgtp.jpg",
           filename: "Camp-Biology/pxoz0xwu9c2gw6fmkgtp",
         },
       ],

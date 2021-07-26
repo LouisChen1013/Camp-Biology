@@ -68,5 +68,5 @@ CampgroundSchema.post("findOneAndDelete", async function (doc) {
 });
 
 module.exports = mongoose.model("Campground", CampgroundSchema);
-// The first argument is the singular name of the collection that will be created for your model (Mongoose will create the database collection for the above model SomeModel above)
+// The first argument is the singular name of the collection that will be created for your model (Mongoose will create the database collection for the model above)
 // The second argument is the schema you want to use in creating the model.
